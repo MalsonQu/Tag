@@ -2,6 +2,7 @@ package Tag
 
 import (
 	"reflect"
+	"strings"
 )
 
 type Tag struct {
@@ -27,7 +28,7 @@ func (c *Tag) Parse(st interface{}) {
 }
 
 func (c *Tag) SetField(field string) {
-	c.Field = field
+	c.Field = strings.ToUpper(field)
 }
 
 func (c *Tag) Get(name string, field ...string) string {
@@ -35,7 +36,7 @@ func (c *Tag) Get(name string, field ...string) string {
 	if len(c.Field) > 0 {
 		f = c.Tags[c.Field]
 	} else if len(field) > 0 {
-		f = c.Tags[field[0]]
+		f = c.Tags[strings.ToUpper(field[0])]
 	} else {
 		panic("TAG: can not get tag content , because not set Field")
 	}
