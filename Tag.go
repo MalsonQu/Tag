@@ -10,7 +10,7 @@ type Tag struct {
 	Field string
 }
 
-func (c *Tag) Parse(st interface{}) {
+func (c *Tag) Parse(st interface{}) *Tag {
 	t := reflect.TypeOf(st)
 	if t.Kind() == reflect.Ptr {
 		t = t.Elem()
@@ -25,10 +25,14 @@ func (c *Tag) Parse(st interface{}) {
 	for i := 0; i != t.NumField(); i++ {
 		c.Tags[t.Field(i).Name] = t.Field(i).Tag
 	}
+
+	return c
 }
 
-func (c *Tag) SetField(field string) {
+func (c *Tag) SetField(field string) *Tag {
 	c.Field = strings.ToUpper(field)
+
+	return c
 }
 
 func (c *Tag) Get(name string, field ...string) string {
